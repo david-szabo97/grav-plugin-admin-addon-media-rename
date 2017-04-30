@@ -1,8 +1,6 @@
 # Admin Addon Media Rename Plugin
 
-**This README.md file should be modified to describe the features, installation, configuration, and general usage of this plugin.**
-
-The **Admin Addon Media Rename** Plugin is for [Grav CMS](http://github.com/getgrav/grav). A simple plugin which adds the option to rename media files in the admin panel
+The **Admin Addon Media Rename** Plugin is for [Grav CMS](http://github.com/getgrav/grav). A simple plugin which adds the option to rename media files in the admin panel.
 
 ## Installation
 
@@ -18,33 +16,16 @@ This will install the Admin Addon Media Rename plugin into your `/user/plugins` 
 
 ### Manual Installation
 
-To install this plugin, just download the zip version of this repository and unzip it under `/your/site/grav/user/plugins`. Then, rename the folder to `admin-addon-media-rename`. You can find these files on [GitHub](https://github.com/d-vid-szab-/grav-plugin-admin-addon-media-rename) or via [GetGrav.org](http://getgrav.org/downloads/plugins#extras).
+To install this plugin, just download the zip version of this repository and unzip it under `/your/site/grav/user/plugins`. Then, rename the folder to `admin-addon-media-rename`. You can find these files on [GitHub](https://github.com/david-szabo97/grav-plugin-admin-addon-media-rename) or via [GetGrav.org](http://getgrav.org/downloads/plugins#extras).
 
 You should now have all the plugin files under
 
     /your/site/grav/user/plugins/admin-addon-media-rename
 	
-> NOTE: This plugin is a modular component for Grav which requires [Grav](http://github.com/getgrav/grav) and the [Error](https://github.com/getgrav/grav-plugin-error) and [Problems](https://github.com/getgrav/grav-plugin-problems) to operate.
-
-## Configuration
-
-Before configuring this plugin, you should copy the `user/plugins/admin-addon-media-rename/admin-addon-media-rename.yaml` to `user/config/plugins/admin-addon-media-rename.yaml` and only edit that copy.
-
-Here is the default configuration and an explanation of available options:
-
-```yaml
-enabled: true
-```
+> NOTE: This plugin is a modular component for Grav which requires [Grav](http://github.com/getgrav/grav) and the [Admin](https://github.com/getgrav/grav-plugin-admin) plugin to operate.
 
 ## Usage
 
-**Describe how to use the plugin.**
+After installation just simply click on the names of the media to rename them.
 
-## Credits
-
-**Did you incorporate third-party code? Want to thank somebody?**
-
-## To Do
-
-- [ ] Future plans, if any
-
+![Usage GIF](usage.gif)
