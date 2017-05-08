@@ -60,34 +60,52 @@ class AdminAddonMediaRenamePlugin extends Plugin {
     }
 
     $this->enable([
-      'onAssetsInitialized' => ['onAssetsInitialized', 0]
+      'onTwigTemplatePaths' => ['onTwigTemplatePaths', 0],
+      'onTwigExtensions' => ['onTwigExtensions', 0]
     ]);
   }
 
-  public function onAssetsInitialized() {
-    $this->grav['assets']->addInlineJs("
-    $(function() {
-      $(document).off('click', '[data-dz-name]');
-      $(document).on('click', '[data-dz-name]', function(e) {
-        var ele = $(this);
-        var newFileName = prompt('Change filename: ', ele.text());
-        if (newFileName) {
-          var data = new FormData();
-          data.append('media_path', ele.closest('[data-media-path]').attr('data-media-local'));
-          data.append('file_name', ele.text());
-          data.append('new_file_name', newFileName);
-          fetch('".self::PATH."', { method: 'POST', body: data}).then(res => res.json()).then(function(result) {
-            if (result.error) {
-              alert('Failed to rename: ' + result.error.msg);
-              return;
-            }
+  public function onTwigTemplatePaths() {
+    $this->grav['twig']->twig_paths[] = __DIR__ . '/templates';
+  }
 
-            ele.text(newFileName);
-          });
-        }
-      });
-    });
-    ");
+  public function onTwigExtensions() {
+    $modal = $this->grav['twig']->twig()->render('rename-modal.twig.html', [
+      'fields' => [
+        [
+          'type'  => 'section',
+          'title' => 'Rename media',
+        ],
+        [
+          'type'     => 'text',
+          'label'    => 'Original name',
+          'name'     => 'old_name',
+          'readonly' => 'true',
+        ],
+        [
+          'type'     => 'text',
+          'label'    => 'Original extension',
+          'name'     => 'old_ext',
+          'readonly' => 'true',
+        ],
+        [
+          'type'  => 'text',
+          'label' => 'New name',
+          'name'  => 'new_name',
+        ],
+        [
+          'type'     => 'text',
+          'label'    => 'New extension',
+          'name'     => 'new_ext',
+        ]
+      ]
+    ]);
+
+    $modal = str_replace("\n", "", $modal);
+    $modal = str_replace("\"", "'", $modal);
+
+    $this->grav['assets']->addInlineJs('var ADMIN_ADDON_MEDIA_RENAME = { PATH: "'.self::PATH.'", MODAL: "'.$modal.'" };', 0, false);
+    $this->grav['assets']->addJs('plugin://admin-addon-media-rename/admin-addon-media-rename.js', 0, false);
   }
 
   public function outputError($msg) {
