@@ -37,7 +37,7 @@ $(function() {
       data.append('media_path', clickedEle.closest('[data-media-path]').attr('data-media-local'));
       data.append('file_name', clickedEle.text());
       data.append('new_file_name', newFileName);
-      fetch(ADMIN_ADDON_MEDIA_RENAME.PATH, { method: 'POST', body: data })
+      fetch(ADMIN_ADDON_MEDIA_RENAME.PATH, { method: 'POST', body: data, credentials: 'same-origin' })
         .then(res => res.json())
         .then(result => {
           if (result.error) {

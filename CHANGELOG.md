@@ -1,3 +1,9 @@
+# v1.1.1
+##  05/09/2017
+
+1. [](#bugfix)
+    * Fix missing credentials.
+
 # v1.1.0
 ##  05/08/2017
 
