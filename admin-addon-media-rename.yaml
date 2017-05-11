@@ -20,5 +20,5 @@ modal:
     name: new_name
     
   - type: text
-    label: Original extension
+    label: New extension
     name: new_ext
