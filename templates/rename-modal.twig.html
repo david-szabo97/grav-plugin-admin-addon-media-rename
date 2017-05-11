@@ -11,7 +11,7 @@
 
     <div class="button-bar">
       <div class="loading">
-        {{ "PLUGIN_ADMIN.LOADING"|tu }}.. <i class="fa fa-spinner fa-spin"></i>
+        {{ "PLUGIN_ADMIN_ADDON_MEDIA_RENAME.RENAMING"|t }}... <i class="fa fa-spinner fa-spin"></i>
       </div>
 
       <button class="button primary">{{ "PLUGIN_ADMIN.CONTINUE"|tu }}</button>
@@ -21,7 +21,7 @@
 
 <div class="remodal" data-remodal-id="modal-admin-addon-media-rename-alert" data-remodal-options="hashTracking: false">
   <form method="post" onsubmit='return false;'>
-    <h1>Failed to rename media file</h1>
+    <h1>{{ "PLUGIN_ADMIN_ADDON_MEDIA_RENAME.RENAME_FAILED"|t }}</h1>
     <p class="bigger"></p>
     <div class="button-bar">
         <button data-remodal-action="confirm" class="button primary">{{ "PLUGIN_ADMIN.CONTINUE"|tu }}</button>

@@ -1,0 +1,15 @@
+PLUGIN_ADMIN_ADDON_MEDIA_RENAME:
+  RENAME_MEDIA: Rename media
+  ORIGINAL_NAME: Original name
+  ORIGINAL_EXTENSION: Original extension
+  NEW_NAME: New name
+  NEW_EXTENSION: New extension
+
+  RENAMING: Renaming
+  RENAME_FAILED: Failed to rename media
+
+  ERROR:
+    INVALID_INPUT: Invalid input
+    FILE_NOT_FOUND: File not found
+    RENAME_FAILED: Rename failed
+    NO_CHANGES: No changes

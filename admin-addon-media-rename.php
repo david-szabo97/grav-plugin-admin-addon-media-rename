@@ -29,7 +29,7 @@ class AdminAddonMediaRenamePlugin extends Plugin {
     if ($this->grav['uri']->path() == self::PATH) {
       // Make sure we have all the data we need
       if (!isset($_POST['media_path']) || !isset($_POST['file_name']) || !isset($_POST['new_file_name'])) {
-        $this->outputError('Invalid Input');
+        $this->outputError($this->grav['language']->translate(['PLUGIN_ADMIN_ADDON_MEDIA_RENAME.ERROR.INVALID_INPUT']));
       }
 
       $mediaPath = $_POST['media_path'];
@@ -43,19 +43,19 @@ class AdminAddonMediaRenamePlugin extends Plugin {
 
         $filePath = $basePath . $fileName;
         if (!file_exists($filePath)) {
-          $this->outputError('Invalid file');
+          $this->outputError($this->grav['language']->translate(['PLUGIN_ADMIN_ADDON_MEDIA_RENAME.ERROR.FILE_NOT_FOUND']));
         }
 
         $newFilePath = $basePath . $newFileName;
         if (!rename($filePath, $newFilePath)) {
-          $this->outputError('Rename failed');
+          $this->outputError($this->grav['language']->translate(['PLUGIN_ADMIN_ADDON_MEDIA_RENAME.ERROR.RENAME_FAILED']));
         }
 
         // Everything went fine
         header('HTTP/1.1 200 OK');
         die('{}');
       } else {
-        $this->outputError('No changes');
+        $this->outputError($this->grav['language']->translate(['PLUGIN_ADMIN_ADDON_MEDIA_RENAME.ERROR.NO_CHANGES']));
       }
     }
 

@@ -3,22 +3,22 @@ enabled: true
 modal:
   fields:
   - type: section
-    title: Rename Media
+    title: PLUGIN_ADMIN_ADDON_MEDIA_RENAME.RENAME_MEDIA
 
   - type: text
-    label: Original Name
+    label: PLUGIN_ADMIN_ADDON_MEDIA_RENAME.ORIGINAL_NAME
     name: old_name
     readonly: true
 
   - type: text
-    label: Original extension
+    label: PLUGIN_ADMIN_ADDON_MEDIA_RENAME.ORIGINAL_EXTENSION
     name: old_ext
     readonly: true
 
   - type: text
-    label: New Name
+    label: PLUGIN_ADMIN_ADDON_MEDIA_RENAME.NEW_NAME
     name: new_name
     
   - type: text
-    label: New extension
+    label: PLUGIN_ADMIN_ADDON_MEDIA_RENAME.NEW_EXTENSION
     name: new_ext
