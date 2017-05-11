@@ -1,1 +1,24 @@
 enabled: true
+
+modal:
+  fields:
+  - type: section
+    title: Rename Media
+
+  - type: text
+    label: Original Name
+    name: old_name
+    readonly: true
+
+  - type: text
+    label: Original extension
+    name: old_ext
+    readonly: true
+
+  - type: text
+    label: New Name
+    name: new_name
+    
+  - type: text
+    label: Original extension
+    name: new_ext

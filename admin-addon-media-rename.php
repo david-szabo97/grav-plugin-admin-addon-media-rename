@@ -70,36 +70,7 @@ class AdminAddonMediaRenamePlugin extends Plugin {
   }
 
   public function onTwigExtensions() {
-    $modal = $this->grav['twig']->twig()->render('rename-modal.twig.html', [
-      'fields' => [
-        [
-          'type'  => 'section',
-          'title' => 'Rename media',
-        ],
-        [
-          'type'     => 'text',
-          'label'    => 'Original name',
-          'name'     => 'old_name',
-          'readonly' => 'true',
-        ],
-        [
-          'type'     => 'text',
-          'label'    => 'Original extension',
-          'name'     => 'old_ext',
-          'readonly' => 'true',
-        ],
-        [
-          'type'  => 'text',
-          'label' => 'New name',
-          'name'  => 'new_name',
-        ],
-        [
-          'type'     => 'text',
-          'label'    => 'New extension',
-          'name'     => 'new_ext',
-        ]
-      ]
-    ]);
+    $modal = $this->grav['twig']->twig()->render('rename-modal.twig.html', $this->config->get('plugins.admin-addon-media-rename.modal'));
 
     $modal = str_replace("\n", "", $modal);
     $modal = str_replace("\"", "'", $modal);
