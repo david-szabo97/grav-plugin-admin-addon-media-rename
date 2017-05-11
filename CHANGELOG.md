@@ -1,3 +1,14 @@
+# v1.2.0
+##  05/11/2017
+
+1. [](#bugfix)
+    * Fixed renaming was available without logging in to admin #6
+    * Fixed media couldn't be deleted after rename #1
+2. [](#improved)
+    * Removed extra margin from loading spinner in the modal #5
+    * Plugin is now translate compatible #4
+    * Form is now configurable #3
+
 # v1.1.1
 ##  05/09/2017
 
