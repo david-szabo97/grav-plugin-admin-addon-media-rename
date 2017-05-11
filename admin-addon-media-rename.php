@@ -22,7 +22,7 @@ class AdminAddonMediaRenamePlugin extends Plugin {
    * Initialize the plugin
    */
   public function onPluginsInitialized() {
-    if (!$this->isAdmin()) {
+    if (!$this->isAdmin() || !$this->grav['user']->authenticated) {
         return;
     }
 
