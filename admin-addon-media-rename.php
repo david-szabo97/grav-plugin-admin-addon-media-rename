@@ -22,14 +22,14 @@ class AdminAddonMediaRenamePlugin extends Plugin {
    * Initialize the plugin
    */
   public function onPluginsInitialized() {
-    if (!$this->isAdmin()) {
+    if (!$this->isAdmin() || !$this->grav['user']->authenticated) {
         return;
     }
 
     if ($this->grav['uri']->path() == self::PATH) {
       // Make sure we have all the data we need
       if (!isset($_POST['media_path']) || !isset($_POST['file_name']) || !isset($_POST['new_file_name'])) {
-        $this->outputError('Invalid Input');
+        $this->outputError($this->grav['language']->translate(['PLUGIN_ADMIN_ADDON_MEDIA_RENAME.ERROR.INVALID_INPUT']));
       }
 
       $mediaPath = $_POST['media_path'];
@@ -43,19 +43,19 @@ class AdminAddonMediaRenamePlugin extends Plugin {
 
         $filePath = $basePath . $fileName;
         if (!file_exists($filePath)) {
-          $this->outputError('Invalid file');
+          $this->outputError($this->grav['language']->translate(['PLUGIN_ADMIN_ADDON_MEDIA_RENAME.ERROR.FILE_NOT_FOUND']));
         }
 
         $newFilePath = $basePath . $newFileName;
         if (!rename($filePath, $newFilePath)) {
-          $this->outputError('Rename failed');
+          $this->outputError($this->grav['language']->translate(['PLUGIN_ADMIN_ADDON_MEDIA_RENAME.ERROR.RENAME_FAILED']));
         }
 
         // Everything went fine
         header('HTTP/1.1 200 OK');
         die('{}');
       } else {
-        $this->outputError('No changes');
+        $this->outputError($this->grav['language']->translate(['PLUGIN_ADMIN_ADDON_MEDIA_RENAME.ERROR.NO_CHANGES']));
       }
     }
 
@@ -70,36 +70,7 @@ class AdminAddonMediaRenamePlugin extends Plugin {
   }
 
   public function onTwigExtensions() {
-    $modal = $this->grav['twig']->twig()->render('rename-modal.twig.html', [
-      'fields' => [
-        [
-          'type'  => 'section',
-          'title' => 'Rename media',
-        ],
-        [
-          'type'     => 'text',
-          'label'    => 'Original name',
-          'name'     => 'old_name',
-          'readonly' => 'true',
-        ],
-        [
-          'type'     => 'text',
-          'label'    => 'Original extension',
-          'name'     => 'old_ext',
-          'readonly' => 'true',
-        ],
-        [
-          'type'  => 'text',
-          'label' => 'New name',
-          'name'  => 'new_name',
-        ],
-        [
-          'type'     => 'text',
-          'label'    => 'New extension',
-          'name'     => 'new_ext',
-        ]
-      ]
-    ]);
+    $modal = $this->grav['twig']->twig()->render('rename-modal.twig.html', $this->config->get('plugins.admin-addon-media-rename.modal'));
 
     $modal = str_replace("\n", "", $modal);
     $modal = str_replace("\"", "'", $modal);

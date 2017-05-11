@@ -1,1 +1,24 @@
 enabled: true
+
+modal:
+  fields:
+  - type: section
+    title: PLUGIN_ADMIN_ADDON_MEDIA_RENAME.RENAME_MEDIA
+
+  - type: text
+    label: PLUGIN_ADMIN_ADDON_MEDIA_RENAME.ORIGINAL_NAME
+    name: old_name
+    readonly: true
+
+  - type: text
+    label: PLUGIN_ADMIN_ADDON_MEDIA_RENAME.ORIGINAL_EXTENSION
+    name: old_ext
+    readonly: true
+
+  - type: text
+    label: PLUGIN_ADMIN_ADDON_MEDIA_RENAME.NEW_NAME
+    name: new_name
+    
+  - type: text
+    label: PLUGIN_ADMIN_ADDON_MEDIA_RENAME.NEW_EXTENSION
+    name: new_ext

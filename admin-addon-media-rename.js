@@ -1,4 +1,6 @@
 $(function() {
+  ADMIN_ADDON_MEDIA_RENAME.renames = {};
+
   var clickedEle;
   var modal;
   var $modal;
@@ -49,7 +51,29 @@ $(function() {
 
           clickedEle.text(newFileName);
           modal.close();
+
+          ADMIN_ADDON_MEDIA_RENAME.renames[data.get('file_name')] = newFileName;
         });
     }
   });
 });
+
+/**
+ * Whenever a 'delmedia' task is called
+ * via Fetch API, we intercept the requset
+ * and we replace the old file name
+ * with the new file name.
+ */
+(function(fetch) {
+  window.fetch = function() {
+    if (arguments[0].indexOf('delmedia') !== -1) {
+      var data = arguments[1];
+      var newName = ADMIN_ADDON_MEDIA_RENAME.renames[data.body.get('filename')];
+      if (typeof newName !== 'undefined') {
+        data.body.set('filename', newName);
+      }
+    }
+    return fetch.apply(this, arguments);
+  };
+
+})(window.fetch);
