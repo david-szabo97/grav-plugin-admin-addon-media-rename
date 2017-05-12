@@ -36,7 +36,7 @@ $(function() {
     var newFileName = $('[name=new_name]', $modal).val() + '.' + $('[name=new_ext]', $modal).val();
     if (newFileName) {
       var data = new FormData();
-      data.append('media_path', clickedEle.closest('[data-media-path]').attr('data-media-local'));
+      data.append('media_path', clickedEle.closest('[data-media-path]').attr('data-media-path'));
       data.append('file_name', clickedEle.text());
       data.append('new_file_name', newFileName);
       fetch(ADMIN_ADDON_MEDIA_RENAME.PATH, { method: 'POST', body: data, credentials: 'same-origin' })

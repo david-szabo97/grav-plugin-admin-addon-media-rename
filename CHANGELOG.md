@@ -1,3 +1,9 @@
+# v1.2.2
+##  05/12/2017
+
+1. [](#improved)
+    * Plugin doesn't rely on the RocketTheme locator anymore.
+
 # v1.2.1
 ##  05/12/2017
 
