@@ -45,7 +45,7 @@ $(function() {
           if (result.error) {
             var alertModal = $.remodal.lookup[$('[data-remodal-id=modal-admin-addon-media-rename-alert]').data('remodal')];
             alertModal.open();
-            $('p', alertModal.$modal).text(result.error.msg);
+            $('p', alertModal.$modal).html(result.error.msg);
             return;
           }
 

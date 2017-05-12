@@ -10,6 +10,6 @@ PLUGIN_ADMIN_ADDON_MEDIA_RENAME:
 
   ERROR:
     INVALID_INPUT: Invalid input
-    FILE_NOT_FOUND: File not found
-    RENAME_FAILED: Rename failed
+    FILE_NOT_FOUND: 'File not found<br><br><strong>Original:</strong> %s'
+    RENAME_FAILED: 'Rename failed<br><br><strong>Original:</strong> %s<br><strong>New:</strong> %s'
     NO_CHANGES: No changes
