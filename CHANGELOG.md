@@ -1,3 +1,9 @@
+# v1.2.1
+##  05/12/2017
+
+1. [](#improved)
+    * Error reports are now more informative.
+
 # v1.2.0
 ##  05/11/2017
 
