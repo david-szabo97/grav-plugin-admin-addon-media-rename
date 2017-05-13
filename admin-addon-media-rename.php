@@ -39,7 +39,7 @@ class AdminAddonMediaRenamePlugin extends Plugin {
       // Only process changes
       if ($fileName != $newFileName) {
         // Locate the media file
-        $basePath = GRAV_ROOT . $mediaPath . DS;
+        $basePath = $this->grav['locator']->findResource('page://' . $mediaPath) . DS;
 
         $filePath = $basePath . $fileName;
         if (!file_exists($filePath)) {
