@@ -1,3 +1,9 @@
+# v1.2.4
+##  05/17/2017
+
+1. [](#bugfix)
+    * Rename now works with folder numeric prefix enabled pages.
+
 # v1.2.3
 ##  05/13/2017
 
