@@ -1,3 +1,12 @@
+# v1.3.0
+##  06/08/2017
+
+1. [](#feature)
+    * The plugin will update the links on the current page. (Toggleable)
+
+2. [](#improved)
+    * Continue button is disabled until you don't do any changes.
+
 # v1.2.4
 ##  05/17/2017
 
