@@ -4,6 +4,8 @@ PLUGIN_ADMIN_ADDON_MEDIA_RENAME:
   ORIGINAL_EXTENSION: Original extension
   NEW_NAME: New name
   NEW_EXTENSION: New extension
+  REPLACE_EXISTING: Update links on this page
+  REPLACE_EXISTING_ALL: Update links on all pages
 
   RENAMING: Renaming
   RENAME_FAILED: Failed to rename media
