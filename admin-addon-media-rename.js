@@ -29,6 +29,24 @@ $(function() {
     $('.button', $modal).removeClass('hidden');
   });
 
+  $(document).on('keyup', '[data-remodal-id=modal-admin-addon-media-rename] input', function(e) {
+    var button = $('.button', $modal);
+    var fields = ['name', 'ext'];
+
+    var diff = false;
+    fields.forEach(function(v) {
+      var val1 = $('[name=new_'+v+']', $modal).val();
+      var val2 = $('[name=old_'+v+']', $modal).val();
+
+      if (val1 !== val2) {
+        diff = true;
+        return false;
+      }
+    });
+
+    button.css('visibility', (diff) ? 'visible' : 'hidden');
+  });
+
   $(document).on('click', '[data-remodal-id=modal-admin-addon-media-rename] .button', function(e) {
     $('.loading', $modal).removeClass('hidden');
     $('.button', $modal).addClass('hidden');
