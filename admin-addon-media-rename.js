@@ -26,7 +26,7 @@ $(function() {
 
     // Reset loading state
     $('.loading', $modal).addClass('hidden');
-    $('.button', $modal).removeClass('hidden');
+    $('.button', $modal).removeClass('hidden').css('visibility', 'hidden');
   });
 
   $(document).on('keyup', '[data-remodal-id=modal-admin-addon-media-rename] input', function(e) {
