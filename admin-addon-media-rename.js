@@ -51,8 +51,24 @@ $(function() {
     $('.loading', $modal).removeClass('hidden');
     $('.button', $modal).addClass('hidden');
     
+    var oldFileName = $('[name=old_name]', $modal).val() + '.' + $('[name=old_ext]', $modal).val();
     var newFileName = $('[name=new_name]', $modal).val() + '.' + $('[name=new_ext]', $modal).val();
     if (newFileName) {
+      // Replace occurences in the editor
+      var replaceInContent = $('[name=replace]:checked', $modal).val();
+      if (replaceInContent == '1') {
+        var editor = Grav.default.Forms.Fields.EditorField.Instance.editors.data('codemirror').doc;
+        var re = /(\[[^\]]{0,}\])\(([^\)]{0,})\)/g;
+        var res;
+        var val = editor.getValue();
+        var newVal = val;
+        while ((res = re.exec(val)) !== null) {
+          if (res[2] === oldFileName) {
+            newVal = newVal.replace(res[0], res[1] + '(' + newFileName + ')');
+          }
+        }
+        editor.setValue(newVal);
+      }
       var data = new FormData();
       data.append('media_path', clickedEle.closest('[data-media-local]').attr('data-media-local'));
       data.append('file_name', clickedEle.text());
