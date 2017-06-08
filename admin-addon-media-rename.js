@@ -69,10 +69,15 @@ $(function() {
         }
         editor.setValue(newVal);
       }
+
+      // Do request
+      var replaceAll = $('[name=replace_all]:checked', $modal).val();
       var data = new FormData();
       data.append('media_path', clickedEle.closest('[data-media-local]').attr('data-media-local'));
       data.append('file_name', clickedEle.text());
       data.append('new_file_name', newFileName);
+      data.append('replace_all', replaceAll);
+
       fetch(ADMIN_ADDON_MEDIA_RENAME.PATH, { method: 'POST', body: data, credentials: 'same-origin' })
         .then(res => res.json())
         .then(result => {
