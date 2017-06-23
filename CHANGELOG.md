@@ -1,3 +1,9 @@
+# v1.4.0
+##  06/23/2017
+
+1. [](#feature)
+    * The plugin will update the links on every page. (Toggleable)
+
 # v1.3.0
 ##  06/08/2017
 
