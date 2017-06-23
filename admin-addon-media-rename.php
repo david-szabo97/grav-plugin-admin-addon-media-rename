@@ -46,6 +46,7 @@ class AdminAddonMediaRenamePlugin extends Plugin {
     $mediaPath = $_POST['media_path'];
     $fileName = $_POST['file_name'];
     $newFileName = $_POST['new_file_name'];
+    $replaceAll = (isset($_POST['replace_all'])) ? $_POST['replace_all'] : false;
 
     $page = $this->grav['admin']->page(false, $mediaPath);
     
@@ -62,6 +63,41 @@ class AdminAddonMediaRenamePlugin extends Plugin {
       $newFilePath = $basePath . $newFileName;
       if (!rename($filePath, $newFilePath)) {
         $this->outputError($this->grav['language']->translate(['PLUGIN_ADMIN_ADDON_MEDIA_RENAME.ERROR.RENAME_FAILED', $filePath, $newFilePath]));
+      }
+
+      if ($replaceAll) {
+        $oldUrl = $mediaPath . '/' . $fileName;
+        $instances = $this->grav['pages']->instances();
+        foreach ($instances as $page) {
+          $raw = $page->raw();
+
+          // Find all links
+          preg_match_all('/(\[[^\]]{0,}\])\(([^\)]{0,})\)/', $raw, $matches);
+
+          // Do replace
+          $replaces = 0;
+          foreach ($matches[0] as $k => $m) {
+            $url = $matches[2][$k];
+            $normalizedUrl = $this->grav['uri']->isExternal($url) ? $url : \Grav\Common\Utils::normalizePath($page->url() . '/' . $url);
+
+            if ($normalizedUrl === $oldUrl) {
+              $oldUrl = $matches[2][$k];
+              $parts = explode('/', $oldUrl);
+              $lastPart = count($parts) - 1;
+              $parts[$lastPart] = $newFileName;
+              $newUrl = implode('/', $parts);
+
+              $newLink = $matches[1][$k] . '(' . $newUrl . ')';
+              $raw = str_replace($matches[0][$k], $newLink, $raw);
+              $replaces++;
+            }
+          }
+
+          if ($replaces > 0) {
+            $page->raw($raw);
+            $page->save();
+          }
+        }
       }
 
       // Everything went fine

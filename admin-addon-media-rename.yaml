@@ -32,7 +32,7 @@ modal:
       1: Yes
       0: No
 
-  - type: hidden
+  - type: toggle
     label: PLUGIN_ADMIN_ADDON_MEDIA_RENAME.REPLACE_EXISTING_ALL
     name: replace_all
     highlight: 1
