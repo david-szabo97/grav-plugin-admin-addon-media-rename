@@ -1,3 +1,9 @@
+# v1.4.1
+##  07/06/2017
+
+1. [](#bugfix)
+    * The plugin will now work properly when Grav is running in a subdirectory or has custom base url
+
 # v1.4.0
 ##  06/23/2017
 
