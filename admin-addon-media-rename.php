@@ -5,16 +5,16 @@ use Grav\Common\Plugin;
 use RocketTheme\Toolbox\Event\Event;
 
 /**
- * Class AdminAddonMediaRenamePlugin
- * @package Grav\Plugin
- */
+* Class AdminAddonMediaRenamePlugin
+* @package Grav\Plugin
+*/
 class AdminAddonMediaRenamePlugin extends Plugin {
 
   const ROUTE = '/admin-addon-media-rename';
 
   public static function getSubscribedEvents() {
     return [
-      'onPluginsInitialized' => ['onPluginsInitialized', 0]
+    'onPluginsInitialized' => ['onPluginsInitialized', 0]
     ];
   }
 
@@ -28,89 +28,95 @@ class AdminAddonMediaRenamePlugin extends Plugin {
 
   public function onPluginsInitialized() {
     if (!$this->isAdmin() || !$this->grav['user']->authenticated) {
-        return;
+      return;
     }
 
     if ($this->grav['uri']->path() == $this->getPath()) {
-       $this->enable(['onPagesInitialized' => ['processRenameRequest', 0]]);
-       return;
+      $this->enable(['onPagesInitialized' => ['processRenameRequest', 0]]);
+      return;
     }
 
     $this->enable([
-      'onTwigTemplatePaths' => ['onTwigTemplatePaths', 0],
-      'onTwigExtensions' => ['onTwigExtensions', 0]
+    'onTwigTemplatePaths' => ['onTwigTemplatePaths', 0],
+    'onPagesInitialized' => ['onTwigExtensions', 0],
+    'onAdminTaskExecute' => ['onAdminTaskExecute', 0],
     ]);
   }
 
-  public function processRenameRequest() {
-    // Make sure we have all the data we need
-    if (!isset($_POST['media_path']) || !isset($_POST['file_name']) || !isset($_POST['new_file_name'])) {
-      $this->outputError($this->grav['language']->translate(['PLUGIN_ADMIN_ADDON_MEDIA_RENAME.ERROR.INVALID_INPUT']));
-    }
+  public function onAdminTaskExecute($e) {
+    $method = $e['method'];
 
-    $mediaPath = str_replace($this->grav['uri']->rootUrl(), '', $_POST['media_path']);
-    $fileName = $_POST['file_name'];
-    $newFileName = $_POST['new_file_name'];
-    $replaceAll = (isset($_POST['replace_all'])) ? $_POST['replace_all'] : false;
-
-    $page = $this->grav['admin']->page(false, $mediaPath);
-    
-    // Only process changes
-    if ($fileName != $newFileName) {
-      // Locate the media file
-      $basePath = $page->path() . DS;
-
-      $filePath = $basePath . $fileName;
-      if (!file_exists($filePath)) {
-        $this->outputError($this->grav['language']->translate(['PLUGIN_ADMIN_ADDON_MEDIA_RENAME.ERROR.FILE_NOT_FOUND', $filePath]));
+    if ($method === 'taskAdminAddonMediaRenameDoRename') {
+      // Make sure we have all the data we need
+      if (!isset($_POST['file_name']) || !isset($_POST['new_file_name'])) {
+        $this->outputError($this->grav['language']->translate(['PLUGIN_ADMIN_ADDON_MEDIA_RENAME.ERROR.INVALID_INPUT']));
       }
 
-      $newFilePath = $basePath . $newFileName;
-      if (!rename($filePath, $newFilePath)) {
-        $this->outputError($this->grav['language']->translate(['PLUGIN_ADMIN_ADDON_MEDIA_RENAME.ERROR.RENAME_FAILED', $filePath, $newFilePath]));
-      }
+      $fileName = $_POST['file_name'];
+      $newFileName = $_POST['new_file_name'];
+      $replaceAll = (isset($_POST['replace_all'])) ? $_POST['replace_all'] : false;
 
-      if ($replaceAll) {
-        $oldUrl = $mediaPath . '/' . $fileName;
-        $instances = $this->grav['pages']->instances();
-        foreach ($instances as $page) {
-          $raw = $page->raw();
+      $page = $this->grav['admin']->page(true);
 
-          // Find all links
-          preg_match_all('/(\[[^\]]{0,}\])\(([^\)]{0,})\)/', $raw, $matches);
+      // Only process changes
+      if ($fileName != $newFileName) {
+        // Locate the media file
+        $basePath = $page->path() . DS;
 
-          // Do replace
-          $replaces = 0;
-          foreach ($matches[0] as $k => $m) {
-            $url = $matches[2][$k];
-            $normalizedUrl = $this->grav['uri']->isExternal($url) ? $url : \Grav\Common\Utils::normalizePath($page->url() . '/' . $url);
+        $filePath = $basePath . $fileName;
+        if (!file_exists($filePath)) {
+          $this->outputError($this->grav['language']->translate(['PLUGIN_ADMIN_ADDON_MEDIA_RENAME.ERROR.FILE_NOT_FOUND', $filePath]));
+        }
 
-            if ($normalizedUrl === $oldUrl) {
-              $oldUrl = $matches[2][$k];
-              $parts = explode('/', $oldUrl);
-              $lastPart = count($parts) - 1;
-              $parts[$lastPart] = $newFileName;
-              $newUrl = implode('/', $parts);
+        $newFilePath = $basePath . $newFileName;
+        if (!rename($filePath, $newFilePath)) {
+          $this->outputError($this->grav['language']->translate(['PLUGIN_ADMIN_ADDON_MEDIA_RENAME.ERROR.RENAME_FAILED', $filePath, $newFilePath]));
+        }
 
-              $newLink = $matches[1][$k] . '(' . $newUrl . ')';
-              $raw = str_replace($matches[0][$k], $newLink, $raw);
-              $replaces++;
+        if ($replaceAll) {
+          $oldUrl = $page->url() . '/' . $fileName;
+          $instances = $this->grav['pages']->instances();
+          foreach ($instances as $page) {
+            $raw = $page->raw();
+
+            // Find all links
+            preg_match_all('/(\[[^\]]{0,}\])\(([^\)]{0,})\)/', $raw, $matches);
+
+            // Do replace
+            $replaces = 0;
+            foreach ($matches[0] as $k => $m) {
+              $url = $matches[2][$k];
+              $normalizedUrl = $this->grav['uri']->isExternal($url) ? $url : \Grav\Common\Utils::normalizePath($page->url() . '/' . $url);
+
+              if ($normalizedUrl === $oldUrl) {
+                $oldUrl = $matches[2][$k];
+                $parts = explode('/', $oldUrl);
+                $lastPart = count($parts) - 1;
+                $parts[$lastPart] = $newFileName;
+                $newUrl = implode('/', $parts);
+
+                $newLink = $matches[1][$k] . '(' . $newUrl . ')';
+                $raw = str_replace($matches[0][$k], $newLink, $raw);
+                $replaces++;
+              }
+            }
+
+            if ($replaces > 0) {
+              $page->raw($raw);
+              $page->save();
             }
           }
-
-          if ($replaces > 0) {
-            $page->raw($raw);
-            $page->save();
-          }
         }
-      }
 
-      // Everything went fine
-      header('HTTP/1.1 200 OK');
-      die('{}');
-    } else {
-      $this->outputError($this->grav['language']->translate(['PLUGIN_ADMIN_ADDON_MEDIA_RENAME.ERROR.NO_CHANGES']));
+        // Everything went fine
+        header('HTTP/1.1 200 OK');
+        die('{}');
+      } else {
+        $this->outputError($this->grav['language']->translate(['PLUGIN_ADMIN_ADDON_MEDIA_RENAME.ERROR.NO_CHANGES']));
+      }
     }
+
+    return false;
   }
 
   public function onTwigTemplatePaths() {
@@ -119,12 +125,11 @@ class AdminAddonMediaRenamePlugin extends Plugin {
 
   public function onTwigExtensions() {
     $modal = $this->grav['twig']->twig()->render('rename-modal.twig.html', $this->config->get('plugins.admin-addon-media-rename.modal'));
+    $page = $this->grav['admin']->page(true);
 
-    $modal = str_replace("\n", "", $modal);
-    $modal = str_replace("\"", "'", $modal);
-
-    $this->grav['assets']->addInlineJs('var ADMIN_ADDON_MEDIA_RENAME = { PATH: "'.$this->buildUrl().'", MODAL: "'.$modal.'" };', 0, false);
-    $this->grav['assets']->addJs('plugin://admin-addon-media-rename/admin-addon-media-rename.js', 0, false);
+    $jsConfig = ['PATH' => rtrim($this->grav['uri']->rootUrl(true), '/') . '/' . trim($this->getPath(), '/') . '/' . $page->route() . '/task:adminAddonMediaRenameDoRename', 'MODAL' => $modal];
+    $this->grav['assets']->addInlineJs('var ADMIN_ADDON_MEDIA_RENAME = ' . json_encode($jsConfig) . ';', -1000, false);
+    $this->grav['assets']->addJs('plugin://admin-addon-media-rename/admin-addon-media-rename.js', -1000, false);
   }
 
   public function outputError($msg) {
