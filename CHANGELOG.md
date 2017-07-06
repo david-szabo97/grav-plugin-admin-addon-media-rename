@@ -1,3 +1,9 @@
+# v1.5.1
+##  07/06/2017
+
+1. [](#improved)
+    * Changes cursor when it is over the name
+
 # v1.5.0
 ##  07/06/2017
 
