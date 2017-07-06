@@ -69,6 +69,10 @@ class AdminAddonMediaRenamePlugin extends Plugin {
         }
 
         $newFilePath = $basePath . $newFileName;
+        if (file_exists($newFilePath)) {
+          $this->outputError($this->grav['language']->translate(['PLUGIN_ADMIN_ADDON_MEDIA_RENAME.ERROR.NEW_FILE_EXISTS', $filePath, $newFilePath]));
+        }
+
         if (!rename($filePath, $newFilePath)) {
           $this->outputError($this->grav['language']->translate(['PLUGIN_ADMIN_ADDON_MEDIA_RENAME.ERROR.RENAME_FAILED', $filePath, $newFilePath]));
         }

@@ -18,3 +18,4 @@ PLUGIN_ADMIN_ADDON_MEDIA_RENAME:
     FILE_NOT_FOUND: 'File not found<br><br><strong>Original:</strong> %s'
     RENAME_FAILED: 'Rename failed<br><br><strong>Original:</strong> %s<br><strong>New:</strong> %s'
     NO_CHANGES: No changes
+    NEW_FILE_EXISTS: 'A file already exists with that name in this folder<br><br><strong>Original:</strong> %s<br><strong>New:</strong> %s'
