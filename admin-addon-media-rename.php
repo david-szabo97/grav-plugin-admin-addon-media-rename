@@ -10,7 +10,7 @@ use RocketTheme\Toolbox\Event\Event;
  */
 class AdminAddonMediaRenamePlugin extends Plugin {
 
-  const PATH = '/admin/admin-addon-media-rename';
+  const ROUTE = '/admin-addon-media-rename';
 
   public static function getSubscribedEvents() {
     return [
@@ -18,15 +18,20 @@ class AdminAddonMediaRenamePlugin extends Plugin {
     ];
   }
 
-  /**
-   * Initialize the plugin
-   */
+  public function getPath() {
+    return '/' . trim($this->grav['admin']->base, '/') . '/' . trim(self::ROUTE, '/');
+  }
+
+  public function buildUrl() {
+    return rtrim($this->grav['uri']->rootUrl(true), '/') . '/' . trim($this->getPath(), '/');
+  }
+
   public function onPluginsInitialized() {
     if (!$this->isAdmin() || !$this->grav['user']->authenticated) {
         return;
     }
 
-    if ($this->grav['uri']->path() == self::PATH) {
+    if ($this->grav['uri']->path() == $this->getPath()) {
        $this->enable(['onPagesInitialized' => ['processRenameRequest', 0]]);
        return;
     }
@@ -43,7 +48,7 @@ class AdminAddonMediaRenamePlugin extends Plugin {
       $this->outputError($this->grav['language']->translate(['PLUGIN_ADMIN_ADDON_MEDIA_RENAME.ERROR.INVALID_INPUT']));
     }
 
-    $mediaPath = $_POST['media_path'];
+    $mediaPath = str_replace($this->grav['uri']->rootUrl(), '', $_POST['media_path']);
     $fileName = $_POST['file_name'];
     $newFileName = $_POST['new_file_name'];
     $replaceAll = (isset($_POST['replace_all'])) ? $_POST['replace_all'] : false;
@@ -118,7 +123,7 @@ class AdminAddonMediaRenamePlugin extends Plugin {
     $modal = str_replace("\n", "", $modal);
     $modal = str_replace("\"", "'", $modal);
 
-    $this->grav['assets']->addInlineJs('var ADMIN_ADDON_MEDIA_RENAME = { PATH: "'.self::PATH.'", MODAL: "'.$modal.'" };', 0, false);
+    $this->grav['assets']->addInlineJs('var ADMIN_ADDON_MEDIA_RENAME = { PATH: "'.$this->buildUrl().'", MODAL: "'.$modal.'" };', 0, false);
     $this->grav['assets']->addJs('plugin://admin-addon-media-rename/admin-addon-media-rename.js', 0, false);
   }
 
