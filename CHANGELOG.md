@@ -1,3 +1,9 @@
+# v1.5.2
+##  07/06/2017
+
+1. [](#improved)
+    * Prevents rename when new file name is already in use
+
 # v1.5.1
 ##  07/06/2017
 
