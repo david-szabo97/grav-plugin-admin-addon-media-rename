@@ -10,6 +10,9 @@ PLUGIN_ADMIN_ADDON_MEDIA_RENAME:
   RENAMING: Renaming
   RENAME_FAILED: Failed to rename media
 
+  PAGE_MEDIA_INFO: Please don't forget to save the page, otherwise the links won't be updated for this page and it can't be automatically reverted.
+  NON_PAGE_MEDIA_INFO: Please don't forget to save the page, otherwise the rename will fail and it can't be automatically reverted.
+
   ERROR:
     INVALID_INPUT: Invalid input
     FILE_NOT_FOUND: 'File not found<br><br><strong>Original:</strong> %s'
