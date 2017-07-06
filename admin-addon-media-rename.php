@@ -129,6 +129,7 @@ class AdminAddonMediaRenamePlugin extends Plugin {
 
     $jsConfig = ['PATH' => rtrim($this->grav['uri']->rootUrl(true), '/') . '/' . trim($this->getPath(), '/') . '/' . $page->route() . '/task:adminAddonMediaRenameDoRename', 'MODAL' => $modal];
     $this->grav['assets']->addInlineJs('var ADMIN_ADDON_MEDIA_RENAME = ' . json_encode($jsConfig) . ';', -1000, false);
+    $this->grav['assets']->addCss('plugin://admin-addon-media-rename/admin-addon-media-rename.css', -1000, false);
     $this->grav['assets']->addJs('plugin://admin-addon-media-rename/admin-addon-media-rename.js', -1000, false);
   }
 
