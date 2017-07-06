@@ -1,8 +1,11 @@
-# v1.4.1
+# v1.5.0
 ##  07/06/2017
 
-1. [](#bugfix)
-    * The plugin will now work properly when Grav is running in a subdirectory or has custom base url
+1. [](#feature)
+    * Now it supports blueprint file inputs too
+
+2. [](#improved)
+    * Now using admin task rather than custom path
 
 # v1.4.0
 ##  06/23/2017
