@@ -66,15 +66,15 @@ $(function() {
   $(document).on('click', '[data-remodal-id=modal-admin-addon-media-rename] .button', function(e) {
     $('.loading', $modal).removeClass('hidden');
     $('.button', $modal).addClass('hidden');
-    
+
     var oldFileName = $('[name=old_name]', $modal).val() + '.' + $('[name=old_ext]', $modal).val();
     var newFileName = $('[name=new_name]', $modal).val() + '.' + $('[name=new_ext]', $modal).val();
     if (newFileName) {
       // Replace occurences in the editor
       var replaceInContent = $('[name=replace]:checked', $modal).val();
       if (isPageMedia
-          && replaceInContent == '1' 
-          && Grav.default.Forms.Fields.EditorField.Instance.editors 
+          && replaceInContent == '1'
+          && Grav.default.Forms.Fields.EditorField.Instance.editors
           && Grav.default.Forms.Fields.EditorField.Instance.editors.data('codemirror')
           && Grav.default.Forms.Fields.EditorField.Instance.editors.data('codemirror').doc) {
         var editor = Grav.default.Forms.Fields.EditorField.Instance.editors.data('codemirror').doc;
@@ -109,14 +109,14 @@ $(function() {
               }
             }
           }
-          
+
           inputEle.val(JSON.stringify(data));
         }
       }
 
       // Do request
       var replaceAll = $('[name=replace_all]:checked', $modal).val();
-      var data = new FormData(); 
+      var data = new FormData();
       data.append('file_name', clickedEle.text());
       data.append('new_file_name', newFileName);
       if (isPageMedia) {
@@ -160,5 +160,4 @@ $(function() {
     }
     return fetch.apply(this, arguments);
   };
-
 })(window.fetch);
