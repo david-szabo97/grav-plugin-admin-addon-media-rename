@@ -1,3 +1,33 @@
 span[data-dz-name] {
   cursor: text;
 }
+
+.dz-rename {
+  display: none;
+  position: absolute;
+  width: 25px;
+  height: 25px;
+  right: -25px;
+  font-size: 0;
+  cursor: pointer;
+  background: #e1e1e1;
+  bottom: 0;
+}
+
+.dz-rename:after {
+  text-align: center;
+  display: block;
+  font-family: FontAwesome;
+  font-size: 18px;
+  line-height: 25px;
+  content: "\f031";
+  color: #737c81;
+}
+
+.dz-rename:hover:after {
+  color: #0082ba;
+}
+
+.dropzone .dz-preview:hover .dz-rename {
+  display: block;
+}

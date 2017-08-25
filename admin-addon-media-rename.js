@@ -12,6 +12,8 @@ $(function() {
   ADMIN_ADDON_MEDIA_RENAME.renames = {};
 
   var clickedEle;
+  var fileName;
+  var $nameEle;
   var modal;
   var $modal;
   var isPageMedia = false;
@@ -19,15 +21,16 @@ $(function() {
   // Append modal
   $('body').append(ADMIN_ADDON_MEDIA_RENAME.MODAL);
 
-  $(document).off('click', '[data-dz-name]');
-  $(document).on('click', '[data-dz-name]', function(e) {
+  $(document).off('click', '[data-dz-name], .dz-rename');
+  $(document).on('click', '[data-dz-name], .dz-rename', function(e) {
     clickedEle = $(this);
     modal = $.remodal.lookup[$('[data-remodal-id=modal-admin-addon-media-rename]').data('remodal')];
     $modal = modal.$modal;
     modal.open();
 
     // Populate fields
-    var fileName = clickedEle.text();
+    nameEle = clickedEle.closest('.dz-preview').find('[data-dz-name]')
+    fileName = nameEle.text();
     var name = fileName.substr(0, fileName.lastIndexOf('.'));
     var ext = fileName.substr(fileName.lastIndexOf('.') + 1);
     $('[name=old_name]', $modal).val(name);
@@ -117,7 +120,7 @@ $(function() {
       // Do request
       var replaceAll = $('[name=replace_all]:checked', $modal).val();
       var data = new FormData();
-      data.append('file_name', clickedEle.text());
+      data.append('file_name', fileName);
       data.append('new_file_name', newFileName);
       if (isPageMedia) {
         data.append('replace_all', replaceAll);
@@ -134,13 +137,26 @@ $(function() {
             return;
           }
 
-          clickedEle.text(newFileName);
+          nameEle.text(newFileName);
           modal.close();
 
           ADMIN_ADDON_MEDIA_RENAME.renames[data.get('file_name')] = newFileName;
         });
     }
   });
+
+  setInterval(function addRenameButton() {
+    $('.dz-preview').each(function(i, dz) {
+      if ($(this).find('.dz-rename').length == 0) {
+        var ele = document.createElement('a');
+        ele.href = 'javascript:undefined;';
+        ele.title = 'Rename';
+        ele.className = 'dz-rename';
+        ele.innerText = 'Rename';
+        $(this).append(ele);
+      }
+    });
+  }, 1000);
 });
 
 /**
