@@ -1,3 +1,10 @@
+# v1.6.1
+##  10/02/2017
+
+1. [](#improved)
+    * Added translation for Yes and No
+    * Added German translation
+
 # v1.6.0
 ##  08/25/2017
 
