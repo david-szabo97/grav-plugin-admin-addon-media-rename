@@ -1,7 +1,4 @@
 PLUGIN_ADMIN_ADDON_MEDIA_RENAME:
-  YES: Ja
-  NO: Nein
-
   RENAME_MEDIA: Medienobjekt umbenennen
   ORIGINAL_NAME: Alter Name
   ORIGINAL_EXTENSION: Alte Erweiterung

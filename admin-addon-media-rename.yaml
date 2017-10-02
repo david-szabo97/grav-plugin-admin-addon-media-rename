@@ -29,8 +29,8 @@ modal:
     highlight: 1
     default: 1
     options:
-      1: PLUGIN_ADMIN_ADDON_MEDIA_RENAME.YES
-      0: PLUGIN_ADMIN_ADDON_MEDIA_RENAME.NO
+      1: PLUGIN_ADMIN.YES
+      0: PLUGIN_ADMIN.NO
 
   - type: toggle
     label: PLUGIN_ADMIN_ADDON_MEDIA_RENAME.REPLACE_EXISTING_ALL
@@ -38,5 +38,5 @@ modal:
     highlight: 1
     default: 1
     options:
-      1: PLUGIN_ADMIN_ADDON_MEDIA_RENAME.YES
-      0: PLUGIN_ADMIN_ADDON_MEDIA_RENAME.NO
+      1: PLUGIN_ADMIN.YES
+      0: PLUGIN_ADMIN.NO

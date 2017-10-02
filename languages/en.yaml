@@ -1,7 +1,4 @@
 PLUGIN_ADMIN_ADDON_MEDIA_RENAME:
-  YES: Yes
-  NO: No
-  
   RENAME_MEDIA: Rename media
   ORIGINAL_NAME: Original name
   ORIGINAL_EXTENSION: Original extension
