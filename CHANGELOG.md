@@ -1,3 +1,9 @@
+# v1.6.2
+##  10/24/2017
+
+1. [](#bugfix)
+    * Fixed #13 , plugin breaks Admin panel when no home page is available
+
 # v1.6.1
 ##  10/02/2017
 
