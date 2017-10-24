@@ -128,9 +128,12 @@ class AdminAddonMediaRenamePlugin extends Plugin {
   }
 
   public function onTwigExtensions() {
-    $modal = $this->grav['twig']->twig()->render('rename-modal.twig.html', $this->config->get('plugins.admin-addon-media-rename.modal'));
     $page = $this->grav['admin']->page(true);
+    if (!$page) {
+      return;
+    }
 
+    $modal = $this->grav['twig']->twig()->render('rename-modal.twig.html', $this->config->get('plugins.admin-addon-media-rename.modal'));
     $jsConfig = ['PATH' => rtrim($this->grav['uri']->rootUrl(true), '/') . '/' . trim($this->getPath(), '/') . '/' . $page->route() . '/task:adminAddonMediaRenameDoRename', 'MODAL' => $modal];
     $this->grav['assets']->addInlineJs('var ADMIN_ADDON_MEDIA_RENAME = ' . json_encode($jsConfig) . ';', -1000, false);
     $this->grav['assets']->addCss('plugin://admin-addon-media-rename/admin-addon-media-rename.css', -1000, false);
