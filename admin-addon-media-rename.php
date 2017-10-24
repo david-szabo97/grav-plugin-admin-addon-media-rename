@@ -11,6 +11,7 @@ use RocketTheme\Toolbox\Event\Event;
 class AdminAddonMediaRenamePlugin extends Plugin {
 
   const ROUTE = '/admin-addon-media-rename';
+  const TASK_RENAME = 'AdminAddonMediaRenameDoRename';
 
   public static function getSubscribedEvents() {
     return [
@@ -48,7 +49,7 @@ class AdminAddonMediaRenamePlugin extends Plugin {
   public function onAdminTaskExecute($e) {
     $method = $e['method'];
 
-    if ($method === 'taskAdminAddonMediaRenameDoRename') {
+    if ($method === 'task' . self::TASK_RENAME) {
       // Make sure we have all the data we need
       if (!isset($_POST['file_name']) || !isset($_POST['new_file_name'])) {
         $this->outputError($this->grav['language']->translate(['PLUGIN_ADMIN_ADDON_MEDIA_RENAME.ERROR.INVALID_INPUT']));
@@ -137,7 +138,7 @@ class AdminAddonMediaRenamePlugin extends Plugin {
 
     $modal = $this->grav['twig']->twig()->render('rename-modal.twig.html', $this->config->get('plugins.admin-addon-media-rename.modal'));
     $jsConfig = [
-      'PATH' => $this->buildBaseUrl() . '/' . $page->route() . '/task:adminAddonMediaRenameDoRename',
+      'PATH' => $this->buildBaseUrl() . '/' . $page->route() . '/task:' . self::TASK_RENAME,
       'MODAL' => $modal
     ];
     $this->grav['assets']->addInlineJs('var ADMIN_ADDON_MEDIA_RENAME = ' . json_encode($jsConfig) . ';', -1000, false);
