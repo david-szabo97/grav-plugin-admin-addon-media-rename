@@ -14,7 +14,7 @@ class AdminAddonMediaRenamePlugin extends Plugin {
 
   public static function getSubscribedEvents() {
     return [
-    'onPluginsInitialized' => ['onPluginsInitialized', 0]
+      'onPluginsInitialized' => ['onPluginsInitialized', 0]
     ];
   }
 
@@ -32,14 +32,16 @@ class AdminAddonMediaRenamePlugin extends Plugin {
     }
 
     if ($this->grav['uri']->path() == $this->getPath()) {
-      $this->enable(['onPagesInitialized' => ['processRenameRequest', 0]]);
+      $this->enable([
+        'onPagesInitialized' => ['processRenameRequest', 0]
+      ]);
       return;
     }
 
     $this->enable([
-    'onTwigTemplatePaths' => ['onTwigTemplatePaths', 0],
-    'onPagesInitialized' => ['onTwigExtensions', 0],
-    'onAdminTaskExecute' => ['onAdminTaskExecute', 0],
+      'onTwigTemplatePaths' => ['onTwigTemplatePaths', 0],
+      'onPagesInitialized'  => ['onTwigExtensions',    0],
+      'onAdminTaskExecute'  => ['onAdminTaskExecute',  0],
     ]);
   }
 
@@ -134,7 +136,10 @@ class AdminAddonMediaRenamePlugin extends Plugin {
     }
 
     $modal = $this->grav['twig']->twig()->render('rename-modal.twig.html', $this->config->get('plugins.admin-addon-media-rename.modal'));
-    $jsConfig = ['PATH' => $this->buildBaseUrl() . '/' . $page->route() . '/task:adminAddonMediaRenameDoRename', 'MODAL' => $modal];
+    $jsConfig = [
+      'PATH' => $this->buildBaseUrl() . '/' . $page->route() . '/task:adminAddonMediaRenameDoRename',
+      'MODAL' => $modal
+    ];
     $this->grav['assets']->addInlineJs('var ADMIN_ADDON_MEDIA_RENAME = ' . json_encode($jsConfig) . ';', -1000, false);
     $this->grav['assets']->addCss('plugin://admin-addon-media-rename/admin-addon-media-rename.css', -1000, false);
     $this->grav['assets']->addJs('plugin://admin-addon-media-rename/admin-addon-media-rename.js', -1000, false);
