@@ -1,3 +1,9 @@
+# v1.6.3
+##  01/03/2019
+
+1. [](#bugfix)
+    * Fixed #16 , plugin breaks on newer Grav versions.
+
 # v1.6.2
 ##  10/24/2017
 
