@@ -141,9 +141,9 @@ class AdminAddonMediaRenamePlugin extends Plugin {
       'PATH' => $this->buildBaseUrl() . '/' . $page->route() . '/task:' . self::TASK_RENAME,
       'MODAL' => $modal
     ];
-    $this->grav['assets']->addInlineJs('var ADMIN_ADDON_MEDIA_RENAME = ' . json_encode($jsConfig) . ';', -1000, false);
-    $this->grav['assets']->addCss('plugin://admin-addon-media-rename/admin-addon-media-rename.css', -1000, false);
-    $this->grav['assets']->addJs('plugin://admin-addon-media-rename/admin-addon-media-rename.js', -1000, false);
+    $this->grav['assets']->addInlineJs('var ADMIN_ADDON_MEDIA_RENAME = ' . json_encode($jsConfig) . ';', -1000);
+    $this->grav['assets']->addCss('plugin://admin-addon-media-rename/admin-addon-media-rename.css', -1000);
+    $this->grav['assets']->addJs('plugin://admin-addon-media-rename/admin-addon-media-rename.js', -1000);
   }
 
   public function outputError($msg) {
